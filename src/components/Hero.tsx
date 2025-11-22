@@ -16,10 +16,10 @@ export default function Hero() {
 
   const cloudVariants = {
     animate: {
-      x: ['-12%', '10%', '-12%'],
-      opacity: [0.28, 0.16, 0.28],
+      x: ['-16%', '18%', '-16%'],
+      opacity: [0.4, 0.15, 0.32],
       transition: {
-        duration: 18,
+        duration: 22,
         repeat: Infinity,
         ease: 'easeInOut',
       },
@@ -28,10 +28,22 @@ export default function Hero() {
 
   const glowVariants = {
     animate: {
-      scale: [1, 1.05, 1],
-      opacity: [0.65, 0.85, 0.65],
+      scale: [1, 1.06, 1],
+      opacity: [0.6, 0.9, 0.6],
       transition: {
-        duration: 10,
+        duration: 12,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      },
+    },
+  }
+
+  const shimmerVariants = {
+    animate: {
+      opacity: [0.45, 0.7, 0.45],
+      scale: [1, 1.08, 1],
+      transition: {
+        duration: 16,
         repeat: Infinity,
         ease: 'easeInOut',
       },
@@ -39,15 +51,18 @@ export default function Hero() {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-slate-950 to-blue-500/10">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFmMmEzNyIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20"></div>
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-slate-950">
+      <div className="absolute inset-0 night-sky" aria-hidden="true">
+        <div className="absolute inset-0 starfield" />
+        <motion.div className="absolute inset-0 aurora" variants={glowVariants} initial="animate" animate="animate" />
+        <div className="absolute inset-x-0 top-0 bottom-[38%] gradient-haze" />
+        <div className="absolute inset-x-0 bottom-0 h-[42%] water" />
+        <div className="absolute inset-x-0 bottom-[34%] forest-line" />
+        <div className="absolute inset-x-0 bottom-[32%] forest-line blur-[2px] opacity-70" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Animated Avatar */}
           <div className="mb-10 inline-block relative group">
             <motion.div
               className="moon-frame w-48 h-48"
@@ -59,11 +74,18 @@ export default function Hero() {
               <motion.div className="moon-orb" aria-hidden="true" variants={floatVariants}>
                 <div className="moon-surface" />
                 <motion.div className="moon-clouds" variants={cloudVariants}></motion.div>
+                <motion.div className="moon-shimmer" variants={shimmerVariants}></motion.div>
                 <div className="moon-glow-ring" />
               </motion.div>
             </motion.div>
-            <div className="absolute inset-0 rounded-full bg-cyan-200/30 blur-3xl opacity-50 group-hover:opacity-80 transition-opacity"></div>
-            <span className="sr-only">Cinematic moon avatar</span>
+            <motion.div
+              className="absolute inset-[-20%] moon-halo"
+              variants={glowVariants}
+              initial="animate"
+              animate="animate"
+            ></motion.div>
+            <motion.div className="moon-reflection" variants={shimmerVariants} initial="animate" animate="animate" />
+            <span className="sr-only">Cinematic moon avatar with gentle motion</span>
           </div>
 
           {/* Main Heading */}
