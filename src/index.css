@@ -16,6 +16,74 @@
     animation: gradient 8s linear infinite;
   }
 
+  .moon-frame {
+    @apply relative rounded-full overflow-hidden;
+    background: radial-gradient(circle at 50% 40%, rgba(125, 197, 255, 0.2), rgba(15, 23, 42, 0.7));
+    box-shadow: 0 0 40px 12px rgba(59, 130, 246, 0.18), 0 0 80px 28px rgba(14, 165, 233, 0.12);
+    padding: 0.5rem;
+  }
+
+  .moon-orb {
+    @apply relative w-full h-full rounded-full;
+    background: radial-gradient(130% 130% at 32% 28%, #f3f7ff 0%, #d2ddff 36%, #9eb4ff 68%, #6f7cc8 100%);
+    box-shadow: inset 0 0 30px rgba(15, 23, 42, 0.35), inset 0 0 0 1px rgba(226, 232, 240, 0.3);
+    animation: moonGlow 12s ease-in-out infinite;
+    overflow: hidden;
+  }
+
+  .moon-orb::before,
+  .moon-orb::after {
+    content: "";
+    position: absolute;
+    inset: -8%;
+    background-repeat: no-repeat;
+    opacity: 0.18;
+    mix-blend-mode: overlay;
+    filter: blur(0.5px);
+    animation: moonDrift 18s ease-in-out infinite alternate;
+  }
+
+  .moon-orb::before {
+    background-image:
+      radial-gradient(circle at 22% 34%, rgba(44, 64, 117, 0.45) 0, rgba(44, 64, 117, 0.45) 16%, transparent 36%),
+      radial-gradient(circle at 72% 44%, rgba(33, 54, 106, 0.35) 0, rgba(33, 54, 106, 0.35) 14%, transparent 32%),
+      radial-gradient(circle at 48% 62%, rgba(55, 83, 140, 0.4) 0, rgba(55, 83, 140, 0.4) 12%, transparent 32%),
+      radial-gradient(circle at 34% 68%, rgba(27, 47, 95, 0.3) 0, rgba(27, 47, 95, 0.3) 10%, transparent 30%);
+  }
+
+  .moon-orb::after {
+    background-image:
+      radial-gradient(120% 120% at 60% 20%, rgba(255, 255, 255, 0.2), transparent 60%),
+      radial-gradient(circle at 66% 72%, rgba(255, 255, 255, 0.12) 0, transparent 28%),
+      radial-gradient(circle at 18% 80%, rgba(255, 255, 255, 0.08) 0, transparent 32%);
+    opacity: 0.3;
+    animation-duration: 22s;
+  }
+
+  @keyframes moonGlow {
+    0%,
+    100% {
+      box-shadow: inset 0 0 30px rgba(15, 23, 42, 0.32), 0 0 45px 14px rgba(125, 211, 252, 0.18);
+      transform: translateY(0);
+    }
+    50% {
+      box-shadow: inset 0 0 26px rgba(15, 23, 42, 0.38), 0 0 60px 18px rgba(59, 130, 246, 0.2);
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes moonDrift {
+    0% {
+      transform: translate(-4%, -2%) scale(1);
+    }
+    50% {
+      transform: translate(4%, 3%) scale(1.02);
+    }
+    100% {
+      transform: translate(-2%, 5%) scale(1.01);
+    }
+  }
+
   @keyframes gradient {
     to {
       background-position: 200% center;
