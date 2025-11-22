@@ -11,13 +11,12 @@ export default function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           {/* Animated Avatar */}
-          <div className="mb-8 inline-block relative group">
-            <div className="w-40 h-40 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 p-1 animate-pulse">
-              <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-blue-600">
-                YA
-              </div>
+          <div className="mb-10 inline-block relative group">
+            <div className="moon-frame w-44 h-44">
+              <div className="moon-orb" aria-hidden="true"></div>
             </div>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
+            <div className="absolute inset-0 rounded-full bg-cyan-200/30 blur-3xl opacity-60 group-hover:opacity-80 transition-opacity"></div>
+            <span className="sr-only">Cinematic moon avatar</span>
           </div>
 
           {/* Main Heading */}
