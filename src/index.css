@@ -6,6 +6,7 @@
   * {
     @apply border-slate-800;
   }
+
   body {
     @apply bg-slate-950 text-slate-100;
   }
@@ -61,11 +62,13 @@
   }
 
   @keyframes moonGlow {
+
     0%,
     100% {
       box-shadow: inset 0 0 30px rgba(15, 23, 42, 0.32), 0 0 45px 14px rgba(125, 211, 252, 0.18);
       transform: translateY(0);
     }
+
     50% {
       box-shadow: inset 0 0 26px rgba(15, 23, 42, 0.38), 0 0 60px 18px rgba(59, 130, 246, 0.2);
       transform: translateY(-4px);
@@ -76,9 +79,11 @@
     0% {
       transform: translate(-4%, -2%) scale(1);
     }
+
     50% {
       transform: translate(4%, 3%) scale(1.02);
     }
+
     100% {
       transform: translate(-2%, 5%) scale(1.01);
     }
@@ -87,6 +92,107 @@
   @keyframes gradient {
     to {
       background-position: 200% center;
+    }
+  }
+
+  /* Starfield background - lightweight and performant using layered radial-gradients */
+  .starfield {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.9) 0, transparent 60%),
+      radial-gradient(1.5px 1.5px at 30% 40%, rgba(255, 255, 255, 0.85) 0, transparent 60%),
+      radial-gradient(0.9px 0.9px at 50% 10%, rgba(255, 255, 255, 0.8) 0, transparent 60%),
+      radial-gradient(1.2px 1.2px at 70% 80%, rgba(255, 255, 255, 0.85) 0, transparent 60%),
+      radial-gradient(0.8px 0.8px at 85% 30%, rgba(255, 255, 255, 0.7) 0, transparent 60%);
+    background-repeat: repeat;
+    background-size: 1200px 800px;
+    opacity: 0.6;
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  .starfield.twinkle {
+    animation: twinkle 6s linear infinite;
+  }
+
+  @keyframes twinkle {
+
+    0%,
+    100% {
+      opacity: 0.6;
+    }
+
+    50% {
+      opacity: 0.95;
+    }
+  }
+
+  /* Moon halo for soft cinematic glow */
+  .moon-halo {
+    position: absolute;
+    inset: -10% -12% auto -12%;
+    height: 60%;
+    width: 60%;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(125, 211, 252, 0.18), rgba(59, 130, 246, 0.06) 30%, rgba(59, 130, 246, 0.0) 60%);
+    filter: blur(40px);
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
+
+  /* Subtle shooting star */
+  .shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 60px;
+    right: 10%;
+    top: 15%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+    transform: rotate(-25deg) translateY(-20px) scaleY(0.6);
+    opacity: 0.0;
+    pointer-events: none;
+    animation: shoot 4.5s ease-in-out infinite;
+  }
+
+  @keyframes shoot {
+    0% {
+      opacity: 0;
+      transform: translateX(0) translateY(0) rotate(-25deg) scaleY(0.6);
+    }
+
+    10% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.9;
+      transform: translateX(-420px) translateY(120px) rotate(-25deg) scaleY(1);
+    }
+
+    90% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* Respect prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+
+    .animate-gradient,
+    .moon-orb,
+    .moon-orb::before,
+    .moon-orb::after,
+    .starfield.twinkle,
+    .shooting-star {
+      animation: none !important;
+      transition: none !important;
     }
   }
 }

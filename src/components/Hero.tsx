@@ -1,21 +1,62 @@
-import { Github, Linkedin, Mail, ExternalLink, Twitter, Youtube } from 'lucide-react'
+import { ExternalLink, Github, Linkedin, Mail, Twitter, Youtube } from 'lucide-react'
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-slate-950 to-blue-500/10">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFmMmEzNyIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20"></div>
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden" id="home">
+      {/* Layered Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/6 via-slate-950 to-blue-500/6" aria-hidden>
+        <div className="starfield twinkle" aria-hidden></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFmMmEzNyIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-8"></div>
+        <div className="shooting-star" aria-hidden></div>
       </div>
+
+      <div className="moon-halo" aria-hidden></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Animated Avatar */}
-          <div className="mb-10 inline-block relative group">
-            <div className="moon-frame w-44 h-44">
-              <div className="moon-orb" aria-hidden="true"></div>
+          {/* Cinematic Moon Avatar (SVG + CSS layers for high-res feel) */}
+          <div className="mb-10 inline-block relative group" aria-hidden>
+            <div className="moon-frame w-56 h-56 sm:w-64 sm:h-64">
+              <div className="moon-orb flex items-center justify-center" aria-hidden>
+                {/* Inline SVG for crisp crater detail without external assets */}
+                <svg viewBox="0 0 200 200" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
+                  <defs>
+                    <filter id="grain" x="-20%" y="-20%" width="140%" height="140%">
+                      <feTurbulence baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" result="t" />
+                      <feColorMatrix type="saturate" values="0" />
+                      <feBlend in="SourceGraphic" mode="overlay" />
+                    </filter>
+                    <radialGradient id="moonGrad" cx="35%" cy="30%">
+                      <stop offset="0%" stopColor="#f8fbff" stopOpacity="1" />
+                      <stop offset="45%" stopColor="#dbeaff" stopOpacity="1" />
+                      <stop offset="100%" stopColor="#6f7cc8" stopOpacity="1" />
+                    </radialGradient>
+                  </defs>
+
+                  <circle cx="100" cy="100" r="95" fill="url(#moonGrad)" />
+
+                  {/* simple crater shapes to add realistic texture */}
+                  <g fill="#cfd9ff" opacity="0.22">
+                    <ellipse cx="60" cy="70" rx="18" ry="10" />
+                    <ellipse cx="140" cy="95" rx="26" ry="14" />
+                    <ellipse cx="110" cy="140" rx="14" ry="8" />
+                    <ellipse cx="75" cy="125" rx="10" ry="6" />
+                  </g>
+
+                  {/* subtle darker spots */}
+                  <g fill="#2d3f6e" opacity="0.18">
+                    <circle cx="46" cy="100" r="6" />
+                    <circle cx="132" cy="60" r="8" />
+                    <circle cx="160" cy="130" r="5" />
+                  </g>
+
+                  {/* slight grain overlay for photographic feel (filtered) */}
+                  <rect x="0" y="0" width="200" height="200" fill="transparent" filter="url(#grain)" />
+                </svg>
+              </div>
             </div>
-            <div className="absolute inset-0 rounded-full bg-cyan-200/30 blur-3xl opacity-60 group-hover:opacity-80 transition-opacity"></div>
+
+            <div className="absolute inset-0 rounded-full bg-cyan-200/24 blur-3xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
             <span className="sr-only">Cinematic moon avatar</span>
           </div>
 

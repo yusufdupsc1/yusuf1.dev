@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Menu, X, Home, User, Code2, Briefcase, Mail, Github, Linkedin, Twitter, FileText, Sparkles } from 'lucide-react';
+import { Briefcase, Code2, FileText, Github, Home, Linkedin, Mail, Menu, Sparkles, Twitter, User, X } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,41 +7,58 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
+    // Throttle scroll updates using requestAnimationFrame for smoothness
+    let ticking = false;
+    const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      
-      // Active section detection
-      const sections = ['home', 'about', 'skills', 'projects', 'contact'];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 20);
+
+        // Active section detection
+        const current = sections.find((section) => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top <= 100 && rect.bottom >= 100;
+          }
+          return false;
+        });
+        if (current) setActiveSection(current);
+
+        ticking = false;
       });
-      if (current) setActiveSection(current);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // initial check
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = useCallback(() => setIsOpen((v) => !v), []);
 
-  const navItems = [
-    { name: 'Home', href: '#home', icon: Home },
-    { name: 'About', href: '#about', icon: User },
-    { name: 'Skills', href: '#skills', icon: Code2 },
-    { name: 'Projects', href: '#projects', icon: Briefcase },
-    { name: 'Contact', href: '#contact', icon: Mail },
-  ];
+  const navItems = useMemo(
+    () => [
+      { name: 'Home', href: '#home', icon: Home },
+      { name: 'About', href: '#about', icon: User },
+      { name: 'Skills', href: '#skills', icon: Code2 },
+      { name: 'Projects', href: '#projects', icon: Briefcase },
+      { name: 'Contact', href: '#contact', icon: Mail },
+    ],
+    []
+  );
 
-  const socialLinks = [
-    { name: 'GitHub', href: 'https://github.com/yusufdupsc1', icon: Github, color: 'hover:text-purple-400' },
-    { name: 'LinkedIn', href: '#linkedin', icon: Linkedin, color: 'hover:text-blue-400' },
-    { name: 'Twitter', href: '#twitter', icon: Twitter, color: 'hover:text-cyan-400' },
-  ];
+  const socialLinks = useMemo(
+    () => [
+      { name: 'GitHub', href: 'https://github.com/yusufdupsc1', icon: Github, color: 'hover:text-purple-400' },
+      { name: 'LinkedIn', href: '#linkedin', icon: Linkedin, color: 'hover:text-blue-400' },
+      { name: 'Twitter', href: '#twitter', icon: Twitter, color: 'hover:text-cyan-400' },
+    ],
+    []
+  );
 
   return (
     <>
