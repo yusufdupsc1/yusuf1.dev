@@ -1,1 +1,17 @@
+name: Disabled placeholder workflow
+
+# This file previously contained only whitespace and caused GitHub Actions
+# to report parse failures. Replace it with a safe minimal workflow that
+# will only run when manually dispatched.
+
+on:
+	workflow_dispatch: {}
+
+jobs:
+	noop:
+		name: No-op (disabled)
+		runs-on: ubuntu-latest
+		steps:
+			- name: Show placeholder
+				run: echo "This workflow is intentionally a placeholder and won't run on push."
 
