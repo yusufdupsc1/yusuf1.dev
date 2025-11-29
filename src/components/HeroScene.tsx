@@ -90,8 +90,11 @@ function Moon() {
     if (meshRef.current) {
       meshRef.current.rotation.y = clock.getElapsedTime() * 0.05;
     }
-    if (materialRef.current) {
-      (materialRef.current.uniforms.uTime as any).value = clock.getElapsedTime();
+    if (materialRef.current && materialRef.current.uniforms) {
+      const uniforms = materialRef.current.uniforms as {
+        uTime: { value: number };
+      };
+      uniforms.uTime.value = clock.getElapsedTime();
     }
   });
 
@@ -103,7 +106,7 @@ function Moon() {
   );
 
   return (
-    <mesh ref={meshRef} scale={2}>
+    <mesh ref={meshRef} scale={2} position={[0, 0, 0]}>
       <sphereGeometry args={[1, 64, 64]} />
       <shaderMaterial
         ref={materialRef}
@@ -129,14 +132,14 @@ function ParticleStars() {
   });
 
   const particleCount = 2000;
-  const particles = useMemo(() => {
-    const positions = new Float32Array(particleCount * 3);
+  const positions = useMemo(() => {
+    const pos = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount * 3; i += 3) {
-      positions[i] = (Math.random() - 0.5) * 60;
-      positions[i + 1] = (Math.random() - 0.5) * 60;
-      positions[i + 2] = (Math.random() - 0.5) * 60;
+      pos[i] = (Math.random() - 0.5) * 60;
+      pos[i + 1] = (Math.random() - 0.5) * 60;
+      pos[i + 2] = (Math.random() - 0.5) * 60;
     }
-    return positions;
+    return pos;
   }, []);
 
   return (
@@ -145,14 +148,14 @@ function ParticleStars() {
         <bufferAttribute
           attach="attributes-position"
           count={particleCount}
-          array={particles}
+          array={positions}
           itemSize={3}
         />
       </bufferGeometry>
       <pointsMaterial
         size={0.15}
         sizeAttenuation
-        color={new THREE.Color(0.8, 0.9, 1.0)}
+        color={0x8dd4ff}
         transparent
         opacity={0.8}
       />
@@ -185,7 +188,14 @@ function SceneContent() {
  */
 export function HeroScene() {
   return (
-    <div style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        inset: 0,
+      }}
+    >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
         gl={{
