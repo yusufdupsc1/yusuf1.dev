@@ -7,203 +7,41 @@
     @apply border-slate-800;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-slate-950 text-slate-100;
   }
 }
 
 @layer utilities {
-  .animate-gradient {
-    animation: gradient 8s linear infinite;
-  }
 
-  .moon-frame {
-    @apply relative rounded-full overflow-hidden;
-    background: radial-gradient(circle at 50% 40%, rgba(125, 197, 255, 0.2), rgba(15, 23, 42, 0.7));
-    box-shadow: 0 0 40px 12px rgba(59, 130, 246, 0.18), 0 0 80px 28px rgba(14, 165, 233, 0.12);
-    padding: 0.5rem;
-  }
-
-  .moon-orb {
-    @apply relative w-full h-full rounded-full;
-    background: radial-gradient(130% 130% at 32% 28%, #f3f7ff 0%, #d2ddff 36%, #9eb4ff 68%, #6f7cc8 100%);
-    box-shadow: inset 0 0 30px rgba(15, 23, 42, 0.35), inset 0 0 0 1px rgba(226, 232, 240, 0.3);
-    animation: moonGlow 12s ease-in-out infinite;
-    overflow: hidden;
-  }
-
-  .moon-orb::before,
-  .moon-orb::after {
-    content: "";
-    position: absolute;
-    inset: -8%;
-    background-repeat: no-repeat;
-    opacity: 0.18;
-    mix-blend-mode: overlay;
-    filter: blur(0.5px);
-    animation: moonDrift 18s ease-in-out infinite alternate;
-  }
-
-  .moon-orb::before {
-    background-image:
-      radial-gradient(circle at 22% 34%, rgba(44, 64, 117, 0.45) 0, rgba(44, 64, 117, 0.45) 16%, transparent 36%),
-      radial-gradient(circle at 72% 44%, rgba(33, 54, 106, 0.35) 0, rgba(33, 54, 106, 0.35) 14%, transparent 32%),
-      radial-gradient(circle at 48% 62%, rgba(55, 83, 140, 0.4) 0, rgba(55, 83, 140, 0.4) 12%, transparent 32%),
-      radial-gradient(circle at 34% 68%, rgba(27, 47, 95, 0.3) 0, rgba(27, 47, 95, 0.3) 10%, transparent 30%);
-  }
-
-  .moon-orb::after {
-    background-image:
-      radial-gradient(120% 120% at 60% 20%, rgba(255, 255, 255, 0.2), transparent 60%),
-      radial-gradient(circle at 66% 72%, rgba(255, 255, 255, 0.12) 0, transparent 28%),
-      radial-gradient(circle at 18% 80%, rgba(255, 255, 255, 0.08) 0, transparent 32%);
-    opacity: 0.3;
-    animation-duration: 22s;
-  }
-
-  @keyframes moonGlow {
-
-    0%,
-    100% {
-      box-shadow: inset 0 0 30px rgba(15, 23, 42, 0.32), 0 0 45px 14px rgba(125, 211, 252, 0.18);
-      transform: translateY(0);
+  /* Minimal, performant animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
 
-    50% {
-      box-shadow: inset 0 0 26px rgba(15, 23, 42, 0.38), 0 0 60px 18px rgba(59, 130, 246, 0.2);
-      transform: translateY(-4px);
-    }
-  }
-
-  @keyframes moonDrift {
-    0% {
-      transform: translate(-4%, -2%) scale(1);
-    }
-
-    50% {
-      transform: translate(4%, 3%) scale(1.02);
-    }
-
-    100% {
-      transform: translate(-2%, 5%) scale(1.01);
-    }
-  }
-
-  @keyframes gradient {
     to {
-      background-position: 200% center;
-    }
-  }
-
-  /* Starfield background - lightweight and performant using layered radial-gradients */
-  .starfield {
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.9) 0, transparent 60%),
-      radial-gradient(1.5px 1.5px at 30% 40%, rgba(255, 255, 255, 0.85) 0, transparent 60%),
-      radial-gradient(0.9px 0.9px at 50% 10%, rgba(255, 255, 255, 0.8) 0, transparent 60%),
-      radial-gradient(1.2px 1.2px at 70% 80%, rgba(255, 255, 255, 0.85) 0, transparent 60%),
-      radial-gradient(0.8px 0.8px at 85% 30%, rgba(255, 255, 255, 0.7) 0, transparent 60%);
-    background-repeat: repeat;
-    background-size: 1200px 800px;
-    opacity: 0.6;
-    pointer-events: none;
-    transform: translateZ(0);
-    will-change: transform, opacity;
-  }
-
-  .starfield.twinkle {
-    animation: twinkle 6s linear infinite;
-  }
-
-  @keyframes twinkle {
-
-    0%,
-    100% {
-      opacity: 0.6;
-    }
-
-    50% {
-      opacity: 0.95;
-    }
-  }
-
-  /* Moon halo for soft cinematic glow */
-  .moon-halo {
-    position: absolute;
-    inset: -10% -12% auto -12%;
-    height: 60%;
-    width: 60%;
-    left: 50%;
-    top: 10%;
-    transform: translateX(-50%);
-    background: radial-gradient(closest-side, rgba(125, 211, 252, 0.18), rgba(59, 130, 246, 0.06) 30%, rgba(59, 130, 246, 0.0) 60%);
-    filter: blur(40px);
-    pointer-events: none;
-    will-change: opacity, transform;
-  }
-
-  /* Subtle shooting star */
-  .shooting-star {
-    position: absolute;
-    width: 2px;
-    height: 60px;
-    right: 10%;
-    top: 15%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
-    transform: rotate(-25deg) translateY(-20px) scaleY(0.6);
-    opacity: 0.0;
-    pointer-events: none;
-    animation: shoot 4.5s ease-in-out infinite;
-  }
-
-  @keyframes shoot {
-    0% {
-      opacity: 0;
-      transform: translateX(0) translateY(0) rotate(-25deg) scaleY(0.6);
-    }
-
-    10% {
       opacity: 1;
-    }
-
-    50% {
-      opacity: 0.9;
-      transform: translateX(-420px) translateY(120px) rotate(-25deg) scaleY(1);
-    }
-
-    90% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 0;
     }
   }
 
   /* Respect prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
-
-    .animate-gradient,
-    .moon-orb,
-    .moon-orb::before,
-    .moon-orb::after,
-    .starfield.twinkle,
-    .shooting-star {
-      animation: none !important;
-      transition: none !important;
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -211,9 +49,9 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-800 rounded-full;
+  @apply bg-slate-700 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-700;
+  @apply bg-slate-600;
 }
